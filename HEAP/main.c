@@ -1,11 +1,4 @@
-/******************************************************************************
 
-Welcome to GDB Online.
-GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby,
-C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
-Code, Compile, Run and Debug online from anywhere in world.
-
-*******************************************************************************/
 #define _POSIX_C_SOURCE 199309L
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,25 +46,6 @@ int main()
 
     printf("\n \n ");
 
-    /**
-    Build_Heap(vet, 10);
-
-    printf("---------AFTER BUILDING THE HEAP----------\n \n ");
-
-    for(size_t i = 0; i < 10; i++){
-
-        printf("%f \n", vet[i]);
-    }
-
-    printf("---------AFTER HEAPSORT ----------\n \n ");
-
-    HeapSort(vet,10);
-
-    for(size_t i = 0; i < 10; i++){
-
-        printf("%f \n", vet[i]);
-    }
-    */
 
     return 0;
 

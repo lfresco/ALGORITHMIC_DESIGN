@@ -25,46 +25,8 @@ bool Is_Root(int i){
 bool is_Valid_Node(int length, int i){
     return length >= i;
 }
-/**
-void Max_Heapify(float *A, int i, int heap_size){
-    int right = Right(i);
-    int left = Left(i);
-    int largest;
-    if(left <= heap_size && A[left] > A[i]){
-
-       largest = left;
-
-    } else {
-
-        largest = i;
-    }
-
-    if(right <= heap_size && A[right] > A[largest]){
-
-        largest = right;
-    }
-
-    if(largest != i){
-
-        float tmp = A[i];
-        A[i] = A[largest];
-        A[largest] = tmp;
-
-        Max_Heapify(A, largest, heap_size);
-    }
-}
 
 
-void Build_Max_Heap(float * A, int length){
-
-    int heap_size = length;
-
-    for(int i = floor(length/2); i = 0; i--){
-
-        Max_Heapify(A, i, heap_size);
-    }
-}
-*/
 
 void Heapify(float* A, int i, int length){
 
@@ -91,29 +53,7 @@ void Heapify(float* A, int i, int length){
 
 }
 
-/**
-void Remove_Minimum(Heap H, int i){
 
-    H.harr[0] = H.harr[H.size];
-
-    H.size = H.size - 1;
-
-    Heapify(H, 0);
-}
-
-void Build_Heap_Aux(Heap H, int i){
-
-    if(is_Valid_Node(H, i)){
-
-        Build_Heap_Aux(H, Left(i));
-        Build_Heap_Aux(H, Right(i));
-
-        Heapify(H, i);
-
-    }
-
-}
-*/
 
 void Build_Heap(float* A, int length){
 
