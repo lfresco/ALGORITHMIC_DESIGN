@@ -11,7 +11,7 @@ gcc -o "name_of_executable.x" *.c
 
 ## Graphs
 In this section it's possible to see the result of the execution of the program. 
-![Alt-Text](../img/ins_quick_worst.png? raw=true "Worst case test for QuinckSort and InsertionSort")
+![Alt-Text](https://github.com/lfresco/ALGORITHMIC_DESIGN/blob/master/img/ins_quick_worst.png "Worst Case test for Insertion and QuickSort")
 
 ## Running the tests
 
