@@ -25,6 +25,30 @@ float **allocate_matrix(const int rows,
 
     return A;
 }
+void print_matrix(float** m, int n){
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(m[i][j] == INFINITY){
+                printf("0.0000 ");
+            } else {
+                printf("%06.3f ", m[i][j]);
+            }
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+}
+
+void deallocate_matrix(float **A, const size_t rows)
+{
+  for (size_t i=0; i<rows; i++) {
+    free(A[i]);
+  }
+
+  free(A);
+}
 
 void MatrixChainAux(int*P, float** m, float** s, int i, int j){
     
@@ -68,30 +92,7 @@ float** MatrixChain(int *P, int dim){
 
 }
 
-void print_matrix(float** m, int n){
 
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            if(m[i][j] == INFINITY){
-                printf("0.0000 ");
-            } else {
-                printf("%06.3f ", m[i][j]);
-            }
-        }
-        printf("\n");
-    }
-
-    printf("\n");
-}
-
-void deallocate_matrix(float **A, const size_t rows)
-{
-  for (size_t i=0; i<rows; i++) {
-    free(A[i]);
-  }
-
-  free(A);
-}
 
 void correctness_test(int * P, int dim){
     
