@@ -41,23 +41,23 @@ int main(int argc, char *argv[]) {
 
   struct timespec b_time, e_time;
 
-  for (size_t i=1; i<=n; i*=2) {
+  for (size_t i=1; i<=5000; i*=2) {
     printf("%ld", i);
-
+    
     clock_gettime( CLOCK_REALTIME, &b_time);
     naive_matrix_mult(C0, A, B, i, i, i, i);
     clock_gettime(CLOCK_REALTIME, &e_time);
 
     printf("\t%lf", get_execution_time(b_time, e_time));
-    /**
+    
     clock_gettime(CLOCK_REALTIME, &b_time);
     strassen(C1, A, B, i);
     clock_gettime(CLOCK_REALTIME, &e_time);
 
     printf("\t%lf", get_execution_time(b_time, e_time));
     
-    printf("\t%d\n", same_matrix(C0, i, i, C1, i, i));
-    */
+    //printf("\t%d\n", same_matrix(C0, i, i, C1, i, i));
+    
     clock_gettime(CLOCK_REALTIME, &b_time);
     strassen_improved(C2, A, B, i);
     clock_gettime(CLOCK_REALTIME, &e_time);
