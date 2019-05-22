@@ -68,7 +68,7 @@ int PartitionBook(int *A, int indexFirst, int indexLast)
             
             i = i + 1;
             
-            float tmp = A[i];
+            int tmp = A[i];
             A[i] = A[j];
             A[j] = tmp;
         }
@@ -180,100 +180,78 @@ void RadixSort(int * A, int size) {
 }
 
 
-/**
-void Bucket_Sort(int* A, int A_length)
-{  
-    int i, j;  
-    int * count = (int *)malloc(sizeof(int) * A_length); 
-    for (i = 0; i < A_length; i++)
-        count[i] = 0;
- 
-    for (i = 0; i < A_length; i++)
-        (count[A[i]])++;
- 
-    for (i = 0, j = 0; i < A_length; i++)  
-        for(; count[i] > 0; (count[i])--)
-            A[j++] = i;
-            
-    free( count );
-}  
 
-int digit_finder(int number, int k){
-    int term, count;
-    for(count = 1; count <= k; count++){
-        term = number % 10;
-        number = number / 10;
-    }
-    
-    return(term);
+
+
+void swap(int * A, int i, int j){
+    int tmp = A[i];
+    A[i] = A[j];
+    A[j] = tmp;
 }
-int larger_digit(int * A, int size){
-    if(A[0] == -1) return 0;
-    int i = 0;
-    int tmp = 0;
-    int digit = 0;
-    
-    
 
-    for(int i = 0; i < size; i++){
-        if(A[i] > tmp){
-            tmp = A[i];
+int SelectPivot(int *v, int n, int k){
+     if (n == 1 && k == 0) return v[0];
+    int m = (n + 4)/5;
+    int * medians = (int*)malloc(m * sizeof(int));
+    
+    for (int i=0; i<m; i++) {
+        if (5*i + 4 < n) {
+            int * w = v + 5*i;
+            for (int j0=0; j0 < 3; j0++) {
+                int jmin = j0;
+                for (int j=j0+1; j<5; j++) {
+                    if (w[j] < w[jmin]) jmin = j;
+                }
+                swap(w,j0, jmin);
+            }
+            medians[i] = w[2];
+        } else {
+            medians[i] = v[5*i];
         }
     }
 
-    while(tmp!= 0){
-        digit++;
-        tmp = tmp/10;
+    int pivot = SelectPivot(medians, m, m/2);
+    return pivot;
+    free(medians);
+}
+
+int Partition(int *v, int n, int pivot){
+    
+    for (int i=0; i<n; i++) {
+        if (v[i] == pivot) {
+            swap(v,i, n-1);
+            break;
+        }
     }
 
-    return(digit);
-}
-void RadixSort(int * A, int size){
-     int count, k, digit, least_significant, most_significant;
-     int rear[10], front[10];
+    int store = 0;
+    for (int i=0; i<n-1; i++) {
+        if (v[i] < pivot) {
+            swap(v,i, store++);
+        }
+    }
+    swap(v,store, n-1);
 
-     least_significant = 1;
-     most_significant = larger_digit(A, size);
-
-     for(k = least_significant; k <= most_significant; k++){
-         for(count  = 0; count <= 9; count++){
-             rear[count] = -1;
-             front[count] = -1;
-         }
-
-         for(int i = 0; i < size; i++){
-             digit = digit_finder(A[i], k);
-
-             if(front[digit] == -1){
-                 front[digit] = A[i];
-             } else {
-                rear[digit + 1] = A[i];
-             }
-
-             rear[digit] = A[i];
-         } 
-
-         count = 0;
-         while(front[count] == -1){
-             count ++;
-         }
-
-         A[0] = front[count];
-
-         while(count < 9){
-             if(rear[count + 1] != -1 ){
-                 rear[count + 1] = front[count + 1];
-             } else {
-                 rear[count + 1] = rear[count];
-             }
-
-             count++;
-         }
-         
-     }
+    return store;
 }
 
-*/
+
+
+int Select(int *v, int n, int k) {
+   
+
+
+    int pivot = SelectPivot(v, n, k);
+    int store = Partition(v, n, pivot);
+
+    if (store == k) {
+        return pivot;
+    } else if (store > k) {
+        return Select(v, store, k);
+    } else {
+        return Select(v+store+1, n-store-1, k-store-1);
+    }
+}
 
 
 

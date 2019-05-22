@@ -144,7 +144,7 @@ void correctness_and_time(){
     struct timespec b_time, e_time;
     int n_test = 4;
     printf("############# PERFORMANCE AND CORRECTNESS TEST #########\n");
-    for (size_t i=10; i<=10000; i*=2){
+    for (size_t i=10; i<=100000; i*=2){
         printf("%ld", i);
         int ** test_matrix = allocate_corr_matrix(i, n_test);
         clock_gettime( CLOCK_REALTIME, &b_time);
@@ -210,7 +210,7 @@ void best_case(){
         printf("\t%lf", get_execution_time(b_time, e_time));
     
         clock_gettime(CLOCK_REALTIME, &b_time);
-        QuickSortBook(test_matrix[1], 0, i - 1);
+        QuickSortBook(test_matrix[1],0, i - 1);
         clock_gettime(CLOCK_REALTIME, &e_time);
 
         printf("\t%lf", get_execution_time(b_time, e_time));
@@ -274,122 +274,5 @@ int main(int argv, char * argc[])
     return 0;
   
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-    float vet[10];
-    
-    randomly_fill_array(vet, 10);
-    
-    for(size_t i = 0; i < 10; i++){
-        
-        printf("%f \n", vet[i]);
-    }
-    
-    InsertionSortBook(vet, 10);
-    
-    printf("--------------------AFTER SORTING BOOK-------\n");
-    
-    for(size_t i = 0; i < 10; i++){
-        
-        printf("%f \n", vet[i]);
-    }
-    
-    printf("--------------------AFTER SORTING SLIDES-------\n");
-    
-    randomly_fill_array(vet, 10);
-    
-    InsertionSortSlides(vet, 10);
-    
-    for(size_t i = 0; i < 10; i++){
-        
-        printf("%f \n", vet[i]);
-    }
-    
-    printf("--------------------AFTER QUICKSORTING BOOK--------------\n");
-    
-    randomly_fill_array(vet, 10);
-    
-    QuickSortBook(vet, 0, 9);
-    
-    for(size_t i = 0; i < 10; i++){
-        
-        printf("%f \n", vet[i]);
-    }
-    
-    
-    int vector[10];
-    for(int i = 0; i < 10; i++){
-        
-        vector[i] = 10 - (i+1);
-    }
-   
-    /**
-    int sorted_vector[10];
-    for(int i = 0; i < 10; i++){
-        
-        sorted_vector[i] = 0;
-    }
-    
-    printf("--------------------BEFORE COUNTINGSORT--------------\n");
-    
-    for(size_t i = 0; i < 10; i++){
-        
-        printf("%i \n", vector[i]);
-    }
-    
-    printf("--------------------AFTER COUNTINGSORT--------------\n");
-    
-    
-    CountingSort(vector, 10, sorted_vector, 9);
-    
-    for(int i = 0; i <= 10; i++){
-        
-        printf("%i \n", sorted_vector[i]);
-    }
-    
-    
-    
-    printf("------------------BEFORE BUCKET SORT--------------------\n");
-    
-    int vettore[20];
-    for(int i  = 0; i < 20; i++){
-        
-        vettore[i] = 20 - (i + 1);
-    }
-    
-    print_array_int(vettore, 20);
-    printf("----------------AFTER BUCKET SORT-----------------------\n");
-    bucketsort(vettore, 20,3);
-    print_array_int(vettore,20);
-    */
+
  

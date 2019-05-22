@@ -19,6 +19,12 @@
     
    int max(int * a, int n) ;
 
+   
+   int Select(int *v, int n, int k);
+   int Partition(int *v, int n, int pivot);
+   int SelectPivot(int *v, int n, int k);
+   int SelectPivot(int *v, int n, int k);
+
 
     //int larger_digit(node * head);
     //int digit_finder(int number, int k);
