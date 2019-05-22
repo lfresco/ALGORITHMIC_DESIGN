@@ -1,5 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <math.h>
-#include <stdbool.h>
+
+
 int Right(int i){
     return 2*i + 1;
 }
@@ -25,8 +29,8 @@ int Is_Root(int i){
 int is_Valid_Node(int length, int i){
     return length >= i;
 }
-/**
-void Max_Heapify(float *A, int i, int heap_size){
+
+void Max_Heapify(int *A, int i, int heap_size){
     int right = Right(i);
     int left = Left(i);
     int largest;
@@ -46,7 +50,7 @@ void Max_Heapify(float *A, int i, int heap_size){
     
     if(largest != i){
         
-        float tmp = A[i];
+        int tmp = A[i];
         A[i] = A[largest];
         A[largest] = tmp;
         
@@ -55,7 +59,7 @@ void Max_Heapify(float *A, int i, int heap_size){
 }
 
 
-void Build_Max_Heap(float * A, int length){
+void Build_Max_Heap(int * A, int length){
     
     int heap_size = length;
     
@@ -64,9 +68,9 @@ void Build_Max_Heap(float * A, int length){
         Max_Heapify(A, i, heap_size);
     }
 }
-*/
 
-void Heapify(float* A, int i, int length){
+
+void Heapify(int* A, int i, int length){
     
     
     int m = i;
@@ -81,7 +85,7 @@ void Heapify(float* A, int i, int length){
     if(i != m){
         
         
-        float tmp = A[i];
+        int tmp = A[i];
         A[i] = A[m];
         A[m] = tmp;
         
@@ -115,7 +119,7 @@ void Build_Heap_Aux(Heap H, int i){
 }
 */
 
-void Build_Heap(float* A, int length){
+void Build_Heap(int* A, int length){
     
     
     
@@ -127,13 +131,13 @@ void Build_Heap(float* A, int length){
     
 }
 
-void HeapSort(float* A, int length){
+void HeapSort(int* A, int length){
     
     Build_Heap(A, length);
     
     for(int i = length; i >= 1; i--){
         
-        float tmp = A[0];
+        int tmp = A[0];
         A[0] = A[i];
         A[i] = tmp;
         length = length - 1;

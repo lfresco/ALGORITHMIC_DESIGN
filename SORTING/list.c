@@ -115,6 +115,7 @@ int larger_digit(node * head){
     return(digit);
 }
 
+
 int digit_finder(int number, int k){
     int term, count;
     for(count = 1; count <= k; count++){

@@ -7,7 +7,7 @@ void InsertionSortBook (int *A, size_t n)
 
       int key = A[j];
 
-      size_t i = j - 1;
+      int i = j - 1;
 
       while (i > 0 && A[i] > key)
 	{
@@ -19,19 +19,32 @@ void InsertionSortBook (int *A, size_t n)
       A[i + 1] = key;
     }
 }
-
-void InsertionSortSlides (int *A, size_t n)
+void InsertionSort(int *a, int n) {
+	
+    for(int i = 1; i < n; ++i) {
+		
+        int tmp = a[i];
+		int j = i;
+		
+        while(j > 0 && tmp < a[j - 1]) {
+			a[j] = a[j - 1];
+			--j;
+		}
+		a[j] = tmp;
+	}
+}
+void InsertionSortSlides (int *A, int n)
 {
 
-  for (size_t i = 2; i < n; i++)
+  for (int i = 2; i < n; i++)
     {
 
-      size_t j = i;
+      int j = i ;
 
       while (j > 1 && A[j] < A[j - 1])
 	  {
 
-	    size_t tmp = A[j - 1];
+	    int tmp = A[j - 1];
 	    A[j - 1] = A[j];
 	    A[j] = tmp;
 
@@ -82,7 +95,8 @@ void QuickSortBook(int *A, int indexFirst, int indexLast)
 }
 
 void CountingSort(int * A, int A_length){
-    int k = A_length -1;
+   
+    int k = A_length - 1;
     int C[k + 1];
     
     int * B = (int*)malloc(sizeof(int)*A_length);
@@ -133,7 +147,7 @@ void Bucket_Sort(int* A, int A_length)
             A[j++] = i;
             
     free( count );
-} */  
+}  
 
 int digit_finder(int number, int k){
     int term, count;
@@ -210,23 +224,10 @@ void RadixSort(int * A, int size){
      }
 }
 
+*/
 
 
 
 
 
 
-
-
-int main(int argv, char * argc[]){
-
-    int array[5] = {4,3,2,1,0};
-
-    RadixSort(array, 5);
-
-    for(int i = 0; i < 5; i++){
-        printf("A[%d] = %d\n", i, array[i]);
-    }
-
-    return 0;
-}

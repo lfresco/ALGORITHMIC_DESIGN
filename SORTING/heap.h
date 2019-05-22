@@ -12,12 +12,12 @@ int is_Valid_Node(int length, int i);
 int Is_Root(int i);
 int Get_Root();
 int Parent(int i);
-void Heapify(float* A, int i, int length);
-void Build_Heap(float* A, int lenght);
+void Heapify(int* A, int i, int length);
+void Build_Heap(int* A, int lenght);
 
-void HeapSort(float* A, int length);
-void Build_Max_Heap(float * A, int length);
+void HeapSort(int* A, int length);
+void Build_Max_Heap(int * A, int length);
 
-void Max_Heapify(float *A, int i, int heap_size);
+void Max_Heapify(int *A, int i, int heap_size);
 
 #endif //HEAP_H__
