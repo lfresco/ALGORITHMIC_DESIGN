@@ -2,6 +2,7 @@
     #define SORTING_H__
     
     #include <stdlib.h>
+    #include "list.h"
     
     void InsertionSortBook(int * A, int n);
     
@@ -15,6 +16,9 @@
     void CountingSort(int * A, int A_length, int* B, int k);
 
     void RadixSort(int * A, int size);
+    
+   int max(int * a, int n) ;
+
 
     //int larger_digit(node * head);
     //int digit_finder(int number, int k);

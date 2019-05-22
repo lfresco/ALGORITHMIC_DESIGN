@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "list.h"
 void InsertionSortBook (int *A, size_t n)
 {
   for (size_t j = 1; j < n; j++)
@@ -130,6 +131,54 @@ void CountingSort(int * A, int A_length){
     
     
 }
+
+/*
+ * Returns maximum number in an array
+ * @a array pointer
+ * @n number of elements in the array
+ */
+int max(int * A, int n) {
+	int max = A[0];
+	for (int i = 1; i < n; i++) {
+		if (A[i] > max) {
+			max = A[i];
+		}
+	}
+	return max;
+}
+
+/*
+ * Performs Radix Sort on a given array
+ * @a array pointer
+ * @n number of elements in the array
+ */
+void RadixSort(int * A, int size) {
+	int m = max(A, size);
+	int * b = (int*)calloc(size, sizeof(int));
+    
+
+	for (int exp = 1; m / exp > 0; exp*=10) {
+		
+        int * bucket = (int*)calloc(size, sizeof(int));
+
+        
+
+		for (int i = 0; i < size; i++)
+			bucket[(A[i] / exp) % 10]++;
+		for (int i = 1; i < size; i++)
+			bucket[i] += bucket[i - 1];
+		for (int i = size - 1; i >= 0; i--)
+			b[--bucket[(A[i] / exp) % 10]] = A[i];
+
+		for (int i = 0; i < size; i++)
+			A[i] = b[i];
+
+        free( bucket);
+	}
+
+    free( b );
+}
+
 
 /**
 void Bucket_Sort(int* A, int A_length)

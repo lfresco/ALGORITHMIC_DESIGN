@@ -10,19 +10,19 @@ Code, Compile, Run and Debug online from anywhere in world.
 #include <stdlib.h>
 #include "heap.h"
 #include "list.h"
-
+#include <math.h>
 #define _POSIX_C_SOURCE 199309L
 
 #include <time.h>
 #include "sorting.h"
 
 
-#define MAX_ELEM_VALUE 21 
+#define MAX_ELEM_VALUE 100
 
 void randomly_fill_array(int * A, const size_t n)
 {
     for(size_t i = 0; i < n; i++){
-        A[i] = (rand()%(2*MAX_ELEM_VALUE)) - MAX_ELEM_VALUE;
+        A[i] =abs((int)((rand()%(2*MAX_ELEM_VALUE)) - MAX_ELEM_VALUE));
     }
 }
 void print_array_float(float * A, int A_length){
@@ -109,8 +109,9 @@ int ** best_case_m_all(int n_elements){
 }
 
 void deallocate_worst_case_m(int ** matrix, int n_test){
+    
     for(int i = 0; i < n_test; i++){
-        free(matrix[i]);
+        free( matrix[i]);
     }
 
     free( matrix );
@@ -151,7 +152,7 @@ void correctness_and_time(){
         clock_gettime(CLOCK_REALTIME, &e_time);
 
         printf("\t%lf", get_execution_time(b_time, e_time));
-
+    
         clock_gettime(CLOCK_REALTIME, &b_time);
         QuickSortBook(test_matrix[1], 0, i - 1);
         clock_gettime(CLOCK_REALTIME, &e_time);
@@ -162,13 +163,13 @@ void correctness_and_time(){
         HeapSort(test_matrix[2], i );
         clock_gettime(CLOCK_REALTIME, &e_time);
 
-        printf("\t%lf\n", get_execution_time(b_time, e_time));
+        printf("\t%lf", get_execution_time(b_time, e_time));
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        bucketsort(test_matrix[3], i, 10 );
+        RadixSort(test_matrix[3], i );
         clock_gettime(CLOCK_REALTIME, &e_time);
 
-        printf("\t%lf\n", get_execution_time(b_time, e_time));
+        printf("\t%lf", get_execution_time(b_time, e_time));
         
         
         printf("\t%d\n", same_arrays(test_matrix, n_test, i));
