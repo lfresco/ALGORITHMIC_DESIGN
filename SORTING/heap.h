@@ -19,5 +19,7 @@ void HeapSort(int* A, int length);
 void Build_Max_Heap(int * A, int length);
 
 void Max_Heapify(int *A, int i, int heap_size);
+void Heapify_Iterative(int * A, int i, int length);
+void HeapSortIterative(int* A, int length);
 
 #endif //HEAP_H__

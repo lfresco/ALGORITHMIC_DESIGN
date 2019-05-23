@@ -144,3 +144,43 @@ void HeapSort(int* A, int length){
         Heapify(A,0, length);
     }
 }
+
+void HeapSortIterative(int* A, int length){
+    
+    Build_Heap(A, length);
+    
+    for(int i = length; i >= 1; i--){
+        
+        int tmp = A[0];
+        A[0] = A[i];
+        A[i] = tmp;
+        length = length - 1;
+        Heapify_Iterative(A,0, length);
+    }
+}
+
+
+void Heapify_Iterative(int * A, int i, int length){
+ int largest;
+ while ( i <= length) {
+    int le = Left(i);
+    int ri = Right(i);
+    if (le<=length && A[le]>A[i]){
+        largest = le;
+    }else{
+        largest = i;
+    } 
+    if (ri<=length && A[ri]>A[largest])
+        largest = ri;
+    if (largest != i)
+    {
+        int tmp = A[i];
+        A[i] = A[largest];
+        A[largest] = tmp;
+        
+        i = largest;
+    } else{
+        break;
+    } 
+ }
+}
