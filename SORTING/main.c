@@ -17,7 +17,7 @@ Code, Compile, Run and Debug online from anywhere in world.
 #include "sorting.h"
 
 
-#define MAX_ELEM_VALUE 100
+#define MAX_ELEM_VALUE 50
 
 void randomly_fill_array(int * A, const size_t n)
 {
@@ -109,9 +109,8 @@ int ** best_case_m_all(int n_elements){
 }
 
 void deallocate_worst_case_m(int ** matrix, int n_test){
-    
     for(int i = 0; i < n_test; i++){
-        free( matrix[i]);
+        free(matrix[i]);
     }
 
     free( matrix );
@@ -139,14 +138,25 @@ int same_arrays(int** matrix, const int n_test, const int n_elements){
     
 }
 
+void deallocate_matrices(int ** test_matrix, int n_test)
+{
+    for(int i = 0; i < n_test; i++){
+        free( test_matrix[i] );
+    }
+    
+    free(test_matrix);
+}
 void correctness_and_time(){
     
     struct timespec b_time, e_time;
-    int n_test = 4;
+    int n_test = 3;
     printf("############# PERFORMANCE AND CORRECTNESS TEST #########\n");
+    printf("Size \tInsertionSort \tQuickSort \t HeapSort \tCorrectness\n");
     for (size_t i=10; i<=100000; i*=2){
         printf("%ld", i);
+        
         int ** test_matrix = allocate_corr_matrix(i, n_test);
+       
         clock_gettime( CLOCK_REALTIME, &b_time);
         InsertionSort(test_matrix[0], i);
         clock_gettime(CLOCK_REALTIME, &e_time);
@@ -165,16 +175,13 @@ void correctness_and_time(){
 
         printf("\t%lf", get_execution_time(b_time, e_time));
 
-        clock_gettime(CLOCK_REALTIME, &b_time);
-        RadixSort(test_matrix[3], i );
-        clock_gettime(CLOCK_REALTIME, &e_time);
 
-        printf("\t%lf", get_execution_time(b_time, e_time));
+        
         
         
         printf("\t%d\n", same_arrays(test_matrix, n_test, i));
 
-        //deallocate_worst_case_m(test_matrix, n_test);
+        deallocate_worst_case_m(test_matrix, n_test);
 
 
 
@@ -189,6 +196,48 @@ void correctness_and_time(){
     
 }
 
+void linear_sorting()
+{
+    struct timespec b_time, e_time;
+    int n_test = 3;
+    printf("############# LINEAR SORTING #########\n");
+    printf("Size \tRadixSort \tCountingSort \tBucketSort \tCorrectness\n");
+    for (size_t i=10; i<=100000; i*=2){
+        printf("%ld", i);
+        
+        int ** test_matrix = allocate_corr_matrix(i, n_test);
+       
+        clock_gettime( CLOCK_REALTIME, &b_time);
+        RadixSort(test_matrix[0], i);
+        clock_gettime(CLOCK_REALTIME, &e_time);
+
+        printf("\t%lf", get_execution_time(b_time, e_time));
+    
+        clock_gettime(CLOCK_REALTIME, &b_time);
+        CountingSort(test_matrix[1], i);
+        clock_gettime(CLOCK_REALTIME, &e_time);
+
+        printf("\t%lf", get_execution_time(b_time, e_time));
+        
+        
+        clock_gettime(CLOCK_REALTIME, &b_time);
+        BucketSort(test_matrix[2], i, i/5 );
+        clock_gettime(CLOCK_REALTIME, &e_time);
+
+        printf("\t%lf", get_execution_time(b_time, e_time));
+        
+       
+        
+        
+        printf("\t%d\n", same_arrays(test_matrix, n_test, i));
+
+        
+
+
+    } 
+
+    printf("########### END OF THE TEST ##########\n");
+}
 
 
 
@@ -198,7 +247,8 @@ void best_case(){
 
     struct timespec b_time, e_time;
     printf("############# BEST CASE TEST #############\n");
-    for (size_t i=10; i<=10000; i*=2) {
+    printf("Size \tInsertionSort \tQuickSort \tCorrectness\n");
+    for (size_t i=10; i<=40000; i*=2) {
         
         printf("%ld", i);
 
@@ -210,7 +260,7 @@ void best_case(){
         printf("\t%lf", get_execution_time(b_time, e_time));
     
         clock_gettime(CLOCK_REALTIME, &b_time);
-        QuickSortBook(test_matrix[1],0, i - 1);
+        QuickSortBook(test_matrix[1], 0, i/2);
         clock_gettime(CLOCK_REALTIME, &e_time);
 
         printf("\t%lf", get_execution_time(b_time, e_time));
@@ -232,7 +282,8 @@ void worst_case(){
 
     struct timespec b_time, e_time;
     printf("############# WORST CASE TEST #############\n");
-    for (size_t i=10; i<=10000; i*=2) {
+    printf("Size \tInsertionSort \tQuickSort \tCorrectness\n");
+    for (size_t i=10; i<=40000; i*=2) {
         
         printf("%ld", i);
 
@@ -261,7 +312,6 @@ void worst_case(){
 
 }
 
-
 int main(int argv, char * argc[])
 {
 
@@ -270,9 +320,8 @@ int main(int argv, char * argc[])
     worst_case();
 
     correctness_and_time();
-    
+    linear_sorting();
     return 0;
   
 }
-
  

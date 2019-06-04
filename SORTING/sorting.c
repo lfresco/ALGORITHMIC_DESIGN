@@ -68,7 +68,7 @@ int PartitionBook(int *A, int indexFirst, int indexLast)
             
             i = i + 1;
             
-            int tmp = A[i];
+            float tmp = A[i];
             A[i] = A[j];
             A[j] = tmp;
         }
@@ -95,42 +95,6 @@ void QuickSortBook(int *A, int indexFirst, int indexLast)
     }
 }
 
-void CountingSort(int * A, int A_length){
-   
-    int k = A_length - 1;
-    int C[k + 1];
-    
-    int * B = (int*)malloc(sizeof(int)*A_length);
-    
-    for(int i = 0; i <= k; i++){
-        
-        C[i] = 0;
-    }
-    
-    for(int j = 0; j < A_length; j++){
-        
-        C[A[j]] = C[A[j]] + 1;
-    }
-    
-    for(int i = 1; i <= k ; i++){
-        
-        C[i] = C[i] + C[i - 1];
-    }
-    
-    
-    
-    for(int j = (A_length -1); j >= 0; j--){
-        
-        B[C[A[j]]] = A[j];
-        C[A[j]] = C[A[j]] - 1;
-    }
-    
-    for(int i = 0; i < A_length; i++){
-        A[i] = B[i];
-    }
-    
-    
-}
 
 /*
  * Returns maximum number in an array
@@ -138,12 +102,14 @@ void CountingSort(int * A, int A_length){
  * @n number of elements in the array
  */
 int max(int * A, int n) {
+	
 	int max = A[0];
 	for (int i = 1; i < n; i++) {
 		if (A[i] > max) {
 			max = A[i];
 		}
 	}
+	
 	return max;
 }
 
@@ -153,34 +119,30 @@ int max(int * A, int n) {
  * @n number of elements in the array
  */
 void RadixSort(int * A, int size) {
+	
 	int m = max(A, size);
-	int * b = (int*)calloc(size, sizeof(int));
-    
+	int * b = (int*)calloc(size , sizeof(int));
+	
 
-	for (int exp = 1; m / exp > 0; exp*=10) {
+	for (int expo = 1; m / expo > 0; expo*=10) {
+		int * bucket = (int*)calloc(size, sizeof(int));
 		
-        int * bucket = (int*)calloc(size, sizeof(int));
-
-        
 
 		for (int i = 0; i < size; i++)
-			bucket[(A[i] / exp) % 10]++;
+			bucket[(A[i] / expo) % 10]++;
 		for (int i = 1; i < size; i++)
 			bucket[i] += bucket[i - 1];
 		for (int i = size - 1; i >= 0; i--)
-			b[--bucket[(A[i] / exp) % 10]] = A[i];
+			b[--bucket[(A[i] / expo) % 10]] = A[i];
 
 		for (int i = 0; i < size; i++)
 			A[i] = b[i];
-
-        free( bucket);
+			
+		free( bucket );
 	}
-
-    free( b );
+	
+	free( b );
 }
-
-
-
 
 
 void swap(int * A, int i, int j){
@@ -253,6 +215,47 @@ int Select(int *v, int n, int k) {
     }
 }
 
+void CountingSort(int * A, int A_length){
+    
+    int k = Select(A, A_length, A_length - 1);
+    
+    int * C = (int *)malloc((k + 1) * sizeof(int) );
+    
+    
+    
+    int * B = (int*)malloc(sizeof(int)*(A_length + 1 ));
+    
+    for(int i = 0; i <= k; i++){
+        
+        C[i] = 0;
+    }
+    
+    for(int j = 0; j < A_length; j++){
+        
+        C[A[j]] = C[A[j]] + 1;
+    }
+    
+    for(int i = 1; i <= k ; i++){
+        
+        C[i] = C[i] + C[i - 1];
+    }
+    
+    
+    
+    for(int j = (A_length -1); j >= 0; j--){
+        
+        B[C[A[j]]] = A[j];
+        C[A[j]] = C[A[j]] - 1;
+    }
+    //free( C );
+    for(int i = 0; i < A_length +  1; i++){
+        A[i] = B[i + 1 ];
+    }
+    
+    free( B );
+    
+
+}
 
 
 
