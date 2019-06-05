@@ -15,8 +15,7 @@ typedef struct
   int edges_len;		// number of actual edges "occupied"
   int edges_size;		// allocated memory for the edges vector (used in the adding method)
   int dist;			// used to store the actual distance from the source
-  int prev;			// the node we go through to get the minimum distance from the source
-  int visited;			// used to keep track of visited nodes
+  int prev;			// the node we go through to get the minimum distance from the source	
   int id;
 } node;
 
@@ -58,7 +57,7 @@ void add_node (graph * g, int i);	// called inside the add_edge procedure
  * @param w, the weigth of the edge
  * 
  */
-void add_edge (graph * g, char a, char b, int w);
+void add_edge (graph * g, int a, int b, int w);
 
 /**
  * @brief deconstructor for the graph struct
@@ -69,6 +68,10 @@ void freeGraph(graph * g);
  * @brief deconstructor for the node struct
  */
 void freeNode(node * n);
+
+
+graph * BuildRandomGraph(const int HUGE_N, const int MAX_EDGES, const int MAX_WEIGHT);
+void printHuge(graph * g, const int HUGE_N);
 
 #endif //GRAPH_H__
 

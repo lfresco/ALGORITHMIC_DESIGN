@@ -5,6 +5,17 @@
 #include "dijkstra.h"
 #include "heap.h"
 
+void print_array_nodes(const array* Queue)
+{
+    for(int i = 0; i < Queue -> size; i++)
+    {
+        node * current = Queue -> nodes[i];
+        
+        printf(" %d ", current -> id);
+    }
+}
+
+
 
 void init_ssp(graph * g){
 
@@ -12,7 +23,7 @@ void init_ssp(graph * g){
         
         node * current = (g -> nodes[i]);
         if(current != NULL){
-          current->dist = INT_MAX;
+          current->dist = 1000;
           current->prev = 0;
         }
     }
@@ -37,8 +48,9 @@ array*  build_array(graph * g){
     }
 
     array *Q=(array *)malloc(sizeof(array));
-    Q->nodes = nodes_array;
-    Q->size = size;
+    Q -> nodes = nodes_array;
+    Q -> size = size;
+    Q -> original_size = size;
 
     return Q;
 }
@@ -47,7 +59,7 @@ void remove_node_array(array* Queue, int min_index){
     
     int size = (Queue) ->size;
     node * tmp = (Queue) -> nodes[min_index];
-    (Queue)->nodes[min_index] = (Queue)->nodes[size-1];
+    (Queue)->nodes[min_index] = (Queue)->nodes[size - 1];
     (Queue)->nodes[size - 1] = tmp;
 
     (Queue)->size --; 
@@ -87,48 +99,55 @@ node * extract_minimum_array(array * Queue){
 
 
 
-void dijkstra(graph *g, char a, char b){
+void dijkstra(graph *g, int a, int b){
 
     init_ssp(g); // WE initialize all the needed values
-    int a_i = a - 'a';
-    int b_i = b - 'a';
+    int a_i = a ;
+    int b_i = b ;
     node * source = g -> nodes[a_i]; // we get the source 
 
     source -> dist = 0; // and set its distance to zero
 
     array * Q = build_array(g);
     
-    //print_array_nodes(Q);
+    
+  
     
     while(!is_empty_array(Q)){
         
         node * u = extract_minimum_array(Q);
+         
         if(u -> id == b_i) break;
         
         int n = u -> edges_len;
         for(int j = 0; j < n; j++){
+            
             edge * e = u -> edges[j];
-            //print_edge(e);
+            
             int node_id = e -> node;
             node * v = g->nodes[node_id];
 
             relax_array(u, v, e);
+            
 
         }
+        
+        
 
      
     }  
-
+    
+     
     print_path(g, b);
 
 }
 
 
-void dijkstra_heap(graph * g, char a, char b)
+void dijkstra_heap(graph * g, int a, int b)
 {
-     init_ssp(g); // WE initialize all the needed values
-    int a_i = a - 'a';
-    int b_i = b - 'a';
+    init_ssp(g); // WE initialize all the needed values
+    int a_i = a;
+    int b_i = b;
     node * source = g -> nodes[a_i]; // we get the source 
 
     source -> dist = 0; // and set its distance to zero
@@ -136,11 +155,11 @@ void dijkstra_heap(graph * g, char a, char b)
     heap * Queue = BuildHeap(g);
     
     
+    
+    
     while(Queue -> size > 0)
     {
         node * u = extract_minimum_heap(Queue);
-        for(int i = 0; i < Queue -> original_size; i++)
-    
         
         if(u -> id == b_i) break;
   
@@ -148,83 +167,173 @@ void dijkstra_heap(graph * g, char a, char b)
         
         for(int j = 0; j < n; j++)
         {
+            
+            
             edge * e = u -> edges[j];
+            
+            
             int node_id = e -> node;
             node * v = g -> nodes[node_id];
             
-            relax_array(u, v, e);
-            
+            int new_dist = u ->dist + e -> weight;
+            int old_dist = v -> dist;
+
+            if(new_dist < old_dist){
+                
+                
+                v -> dist = new_dist;
+                v -> prev = u -> id;
+                
+                //hswap(Queue, 0, node_id);
+                
+                Heapify(Queue, 0);
+               /**
+               printf("-------------\n");
+               for(int i = 0; i < Queue -> size; i++)
+               printf("%d has dist %d\n", i, Queue -> nodes[i]->dist);
+               */
+            }
         }
+        
+       
+       
     }
     
     
+    //freeHeap(Queue);
+    //freeArray(Queue);
     
     print_path(g, b);
+    
+    
 
 }
-
-
-
-
-
-
-
-
-
 
 
 /**
-void print_path (graph *g, int i) {
-    int n, j;
-    node *v, *u;
-    i = i - 'a';
-    v = g->nodes[i];
-    if (v->dist == INT_MAX) {
-        printf("no path\n");
-        return;
+void dijkstra_heap(graph * g, int a, int b)
+{
+    init_ssp(g); // WE initialize all the needed values
+    int a_i = a;
+    int b_i = b;
+    node * source = g -> nodes[a_i]; // we get the source 
+
+    source -> dist = 0; // and set its distance to zero
+    
+    heap * Queue = BuildHeap(g);
+    
+    printf("Expected 0 got %d\n ", Queue -> nodes[0] -> dist);
+    
+    
+    while(Queue -> size > 0)
+    {
+        
+        node * u = Queue -> nodes[0];
+        
+        hswap(Queue, 0, Queue -> size - 1);
+        Queue -> size --;
+        
+        
+        
+        //node * u = extract_minimum_heap(Queue);
+        
+        if(u -> id == b_i) break;
+  
+        int n = u -> edges_len;
+        
+        for(int j = 0; j < n; j++)
+        {
+            
+            
+            edge * e = u -> edges[j];
+            
+            
+            int node_id = e -> node;
+            node * v = g -> nodes[node_id];
+            
+            int new_dist = u ->dist + e -> weight;
+            int old_dist = v -> dist;
+
+            if(new_dist < old_dist){
+                
+                
+                v -> dist = new_dist;
+                v -> prev = u -> id;
+                
+                
+                
+                Heapify(Queue, 0);
+               /**
+               printf("-------------\n");
+               for(int i = 0; i < Queue -> size; i++)
+               printf("%d has dist %d\n", i, Queue -> nodes[i]->dist);
+               
+            }
+        }
+        
+       
+       
     }
     
-    for (n = 1, u = v; u->dist; u = g->nodes[u->prev], n++)
-        ;
-    char *path = malloc(n);
-    path[n - 1] = 'a' + i;
-    for (j = 0, u = v; u->dist; u = g->nodes[u->prev], j++)
-        path[n - j - 2] = 'a' + u->prev;
-    printf("%d %.*s\n", v->dist, n, path);
-}
+    
+    //freeHeap(Queue);
+    //freeArray(Queue);
+    
+    print_path(g, b);
+    
+    
 
+}
 */
+
 
 void print_path (graph *g, int i) {
     int n, j;
     node *v, *u;
-    i = i - 'a';
+    i = i ;
     v = g->nodes[i];
-    if (v->dist == INT_MAX) {
+    if (v->dist == 1000) {
         printf("no path\n");
         return;
     }
     n = 1;
     u = v;
-    while(u -> dist != 0)
+    while(u -> dist > 0)
     {
         n++;
         u = g -> nodes[u -> prev];
     }
     
-    char *path = malloc(n);
-    path[n - 1] = 'a' + i;
+    int *path = malloc(n * sizeof(int));
+    path[n - 1] =  i;
     j = 0;
     
     u = v;
-    while(u -> dist != 0)
+    while(u -> dist > 0)
     {
-        path[n - j - 2] = 'a' + u -> prev;
+        path[n - j - 2] =  u -> prev;
         j++;
         u = g -> nodes[u -> prev];
     }
 
       
-    printf("%d %.*s\n", v->dist, n, path);
-
+    printf("%d ", v->dist);
+    printf(" %d ", path[0]);
+    for( int i = 1; i < n; i++)
+      printf("  -> %d ", path[i]);
+    
+    printf("\n");
 }
+
+
+
+void freeArray(array* Queue)
+{
+    for(int i = 0; i < Queue -> original_size; i++)
+        freeNode(Queue -> nodes[i]);
+        
+    free(Queue);
+}
+
+
+

@@ -9,6 +9,7 @@ typedef struct
 {
   node **nodes;
   int size;
+  int original_size;
 } array;
 
 
@@ -24,7 +25,7 @@ typedef struct
  * @param char b, the destination node
  * 
  */
-void dijkstra (graph * g, char a, char b);
+void dijkstra (graph * g, int a, int b);
 
 /**
  * @breif Given a graph and a source the algorithm will find the shortest path between 
@@ -36,7 +37,7 @@ void dijkstra (graph * g, char a, char b);
  * 
  */
 
-void dijkstra_heap(graph * g, char a, char b);
+void dijkstra_heap(graph * g, int a, int b);
 
 /**
  * @brief the initialitation of the graph useful for the solution of the dijkstra
@@ -107,5 +108,11 @@ void print_path (graph *g, int i);
  * 
  */
 int is_empty_array(const array* Queue);
+
+void freeArray(array * Queue);
+
+void print_array_nodes(const array* Queue);
+
+
  
 #endif //DIJKSTRA_H__

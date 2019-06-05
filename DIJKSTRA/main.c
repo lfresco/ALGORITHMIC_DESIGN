@@ -3,24 +3,51 @@
 #include <limits.h>
 #include "graph.h"
 #include "dijkstra.h"
+#include "heap.h"
 
 
 int main () {
+   
+    
+    printf("------ TEST FOR GRAPH 1 -------------\n");
     graph *g = build_graph();
-    add_edge(g, 'a', 'b', 7);
-    add_edge(g, 'a', 'c', 9);
-    add_edge(g, 'a', 'e', 14);
-    add_edge(g, 'b', 'c', 10);
-    add_edge(g, 'b', 'd', 15);
-    add_edge(g, 'c', 'd', 11);
-    add_edge(g, 'c', 'f', 2);
-    add_edge(g, 'd', 'e', 6);
-    add_edge(g, 'e', 'f', 9);
-   
-    dijkstra_heap(g, 'a', 'f');
-    dijkstra(g, 'a', 'f');
-    freeGraph( g );
-   
+    add_edge(g, 0, 1, 7);
+    add_edge(g, 0, 2, 9);
+    add_edge(g, 0, 4, 14);
+    add_edge(g, 1, 2, 10);
+    add_edge(g, 1, 3, 15);
+    add_edge(g, 2, 3, 11);
+    add_edge(g, 2, 5, 2);
+    add_edge(g, 3, 4, 6);
+    add_edge(g, 4, 5, 9);
+    printf(" Expected 11 acf\n");
+    printf(" Dijkstra Heap : ");
+    dijkstra_heap(g, 0, 5);
+    printf("Dijkstra Array : ");
+    dijkstra(g, 0, 5);
+    printf("----------- END TEST FOR GRAPH 1 ----------\n");   
+    free(g);
+    
+    graph * huge = BuildRandomGraph(100, 10, 20);
+    
+    dijkstra_heap(huge, 0, 3);
+    dijkstra(huge, 0,3);
+    
+    huge = BuildRandomGraph(150, 30, 40);
+    dijkstra_heap(huge, 0, 3);
+    dijkstra(huge, 0,3);
+    
+    huge = BuildRandomGraph(300, 50, 10);
+    dijkstra_heap(huge, 0, 3);
+    dijkstra(huge, 0,3);
+    
+    
+    huge = BuildRandomGraph(1000, 90, 20);
+    dijkstra_heap(huge, 0, 3);
+    dijkstra(huge, 0,3);
+    
+
+    freeGraph(huge);
     
     
     return 0;
