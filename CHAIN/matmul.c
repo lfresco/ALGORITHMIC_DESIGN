@@ -1,16 +1,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <limits.h>
 
 
-float **allocate_matrix(const int rows,
+
+
+
+
+
+int **allocate_matrix(const int rows,
                         const int cols)
 {
-    float **A = (float **)calloc(sizeof(float *), rows);
+    int **A = (int **)calloc(sizeof(int *), rows);
 
     for (size_t i = 0; i < rows; i++)
     {
-        A[i] = (float *)calloc(sizeof(float), cols);
+        A[i] = (int *)calloc(sizeof(int), cols);
     }
 
     for (int i= 0; i < rows; i++)
@@ -19,20 +25,37 @@ float **allocate_matrix(const int rows,
         for (int j = 0; j < cols; j++)
         {
 
-            A[i][j] = INFINITY;
+            A[i][j] = INT_MAX;
         }
     }
 
     return A;
 }
-void print_matrix(float** m, int n){
+
+
+int **copy_matrix(int **orig, const size_t rows,
+                    const size_t cols)
+{
+  int **C=allocate_matrix(rows, cols);
+
+  for (size_t i=0; i<rows; i++) {
+    for (size_t j=0; j<cols; j++) {
+      C[i][j]=orig[i][j];
+    }
+  }
+
+  return C;
+}
+
+
+void print_matrix(int** m, int n){
 
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
-            if(m[i][j] == INFINITY){
-                printf("0.0000 ");
+            if(m[i][j] == INT_MAX){
+                printf("0 ");
             } else {
-                printf("%06.3f ", m[i][j]);
+                printf("%d ", m[i][j]);
             }
         }
         printf("\n");
@@ -41,18 +64,18 @@ void print_matrix(float** m, int n){
     printf("\n");
 }
 
-void deallocate_matrix(float **A, const size_t rows)
+void deallocate_matrix(int **A, const int rows)
 {
-  for (size_t i=0; i<rows; i++) {
+  for (int i=0; i<rows; i++) {
     free(A[i]);
   }
 
   free(A);
 }
 
-void MatrixChainAux(int*P, float** m, float** s, int i, int j){
+void MatrixChainAux(int*P, int** m, int** s, int i, int j){
     
-    float q;
+    int q;
     for(int k = i; k <= j - 1; k++){
        
        q = m[i-1][k-1] + m[k ][j-1] + P[i-1]*P[k]*P[j];
@@ -64,14 +87,14 @@ void MatrixChainAux(int*P, float** m, float** s, int i, int j){
     }
 }
 
-float** MatrixChain(int *P, int dim){
+int** MatrixChain(int *P, int dim){
 
-    float ** m = allocate_matrix(dim, dim);
-    float ** s = allocate_matrix(dim, dim);
-
+    int ** S = allocate_matrix(dim, dim);
+    int ** M = allocate_matrix(dim, dim);
+    
     for(int i = 0; i < dim; i++){
 
-        m[i][i] = 0;
+        M[i][i] = 0;
     }
 
     for(int l = 1; l <= dim; l++){
@@ -80,37 +103,16 @@ float** MatrixChain(int *P, int dim){
 
             int j = i + l - 1;
 
-            MatrixChainAux(P, m, s, i, j);
+            MatrixChainAux(P, M, S, i, j);
         }
     }
-
-    print_matrix(m, dim);
+    print_matrix(M, dim);
+    deallocate_matrix(M, dim);
     
-    deallocate_matrix(m, dim);
-
-    return s;
+    return S;
 
 }
 
 
-
-void correctness_test(int * P, int dim){
-    
-    printf("Correctness test, see the slides for comparison\n");
-    printf("-----------------------------------------------\n");
-    float**s;
-
-    s = allocate_matrix(4,4);
-
-    s = MatrixChain(P, 4);
-    
-    
-    print_matrix(s, 4);
-    
-    deallocate_matrix(s, 4);
-    
-    printf("------------------------------------------------\n");
-     
-}
 
 

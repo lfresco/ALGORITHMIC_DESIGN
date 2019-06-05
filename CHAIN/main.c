@@ -1,38 +1,48 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "matmul.h"
+#include <time.h>
 
 #define MAX_ELEM_VALUE 25
+#define REPETITIONS 3
+#define BILLION 1E9
 
-void randomly_fill_matrix(float **A, const size_t A_rows, const size_t A_cols)
-{
-  for (size_t i = 0; i < A_rows; i++)
-  {
-    for (size_t j = 0; j < A_cols; j++)
-    {
-      A[i][j] = rand() % (2 * MAX_ELEM_VALUE) - MAX_ELEM_VALUE;
-    }
-  }
-}
 
+  
 
 int main(int argv, char * argc[]){
-    
-     
+  
+  int row1 = 3, col1 = 5;
+  //A[1] = allocate_matrix(row1, col1);
 
-    // Correctness test, i use as benchmark the example shown in class
-    
-    int P[5] = {3, 5, 10, 2, 3};
+  int row2 = 5, col2 = 10;
+  //A[2] = allocate_matrix(row2, col2);
 
-   
- 
-    correctness_test(P, 4);
+  int row3 = 10, col3 = 2;
+  // A[3] = allocate_matrix(row3, col3);
 
-    
-    
-    
-    
-    return 0;
+  int row4 = 2, col4 = 3;
+  //A[4] = allocate_matrix(row4, col4);
 
+  int P[5];
 
+  //P[0] = row1; P[1] = col1; P[2] = row2; P[3] = col2; P[4] = row3; P[5] = col3; P[6] = row4; P[7] = col4;
+
+  P[0] = row1;
+  P[1] = col1;
+  P[2] = col2;
+  P[3] = col3;
+  P[4] = col4;
+
+  int **s;
+
+  s = allocate_matrix(4, 4);
+
+  s = MatrixChain(P, 4);
+
+  print_matrix(s, 4);
+
+  return 0;
 }
+
+
